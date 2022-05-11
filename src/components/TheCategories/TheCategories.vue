@@ -4,20 +4,24 @@
   >
     <div class="border-t border-b px-4 max-w-screen-2xl m-auto">
       <div class="py-3 flex space-x-3 overflow-auto text-sm whitespace-nowrap">
-        <a
-          v-for="categori in categories"
-          :key="categori"
-          href="#"
-          class="px-3 py-1 transition bg-gray-600 border border-gray-700 rounded-full hover:bg-gray-500 text-white"
-          >{{ categori }}</a
-        >
+        <CategoryItem
+          v-for="cotegory in categories"
+          :key="cotegory"
+          :category="cotegory"
+          :isActive="cotegory === 'All'"
+        />
       </div>
     </div>
   </section>
 </template>
 
 <script>
+import CategoryItem from "./CategoryItem.vue";
+
 export default {
+  components: {
+    CategoryItem,
+  },
   data() {
     return {
       categories: [
