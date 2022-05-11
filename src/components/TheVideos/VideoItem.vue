@@ -88,7 +88,7 @@
 
 <script>
 export default {
-  props: ['index'],
+  props: ["index"],
 };
 </script>
 
