@@ -1,3 +1,17 @@
+<template>
+  <TheHeader @open-mobile-sidebar="openMobileSidebar" />
+  <!-- Small sidebar -->
+  <TheSidebarSmall />
+  <!-- Sidebar -->
+  <TheSidebar />
+  <!-- Mobile sidebar -->
+  <TheMobileSidebar :isOpen="isMobileSidebarOpen" @close="closeMobileSidebar" />
+  <!-- Categories -->
+  <TheCategories />
+  <!-- Videos -->
+  <TheVideos />
+</template>
+
 <script>
 import TheHeader from "./components/TheHeader/TheHeader.vue";
 import TheSidebarSmall from "./components/TheSidebarSmall/TheSidebarSmall.vue";
@@ -15,21 +29,21 @@ export default {
     TheCategories,
     TheVideos,
   },
+
+  data() {
+    return {
+      isMobileSidebarOpen: false,
+    };
+  },
+  methods: {
+    openMobileSidebar() {
+      this.isMobileSidebarOpen = true;
+    },
+    closeMobileSidebar() {
+      this.isMobileSidebarOpen = false;
+    },
+  },
 };
 </script>
-
-<template>
-  <TheHeader />
-  <!-- Small sidebar -->
-  <TheSidebarSmall />
-  <!-- Sidebar -->
-  <TheSidebar />
-  <!-- Mobile sidebar -->
-  <TheMobileSidebar />
-  <!-- Categories -->
-  <TheCategories />
-  <!-- Videos -->
-  <TheVideos />
-</template>
 
 <style></style>
