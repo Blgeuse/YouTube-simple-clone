@@ -1,20 +1,20 @@
 <template>
   <TheHeader @toggle-sidebar="toggleSidebar" />
   <!-- Small sidebar -->
-  <TheSidebarSmall :isOpen="sidebarState === 'compact'" />
+  <TheSidebarCompact v-if="isCompactSidebarOpen" />
   <!-- Sidebar -->
-  <TheSidebar :isOpen="sidebarState === 'normal'" />
+  <TheSidebar v-if="isSidebarOpen" />
   <!-- Mobile sidebar -->
   <TheMobileSidebar :isOpen="isMobileSidebarOpen" @close="closeMobileSidebar" />
   <!-- Categories -->
-  <TheCategories :is-sidebar-open="sidebarState === 'normal'" />
+  <TheCategories :is-sidebar-open="isSidebarOpen" />
   <!-- Videos -->
-  <TheVideos :is-sidebar-open="sidebarState === 'normal'" />
+  <TheVideos :is-sidebar-open="isSidebarOpen" />
 </template>
 
 <script>
 import TheHeader from "./components/TheHeader/TheHeader.vue";
-import TheSidebarSmall from "./components/TheSidebarSmall/TheSidebarSmall.vue";
+import TheSidebarCompact from "./components/TheSidebarCompact/TheSidebarCompact.vue";
 import TheSidebar from "./components/TheSidebar/TheSidebar.vue";
 import TheMobileSidebar from "./components/TheMobileSidebar/TheMobileSidebar.vue";
 import TheCategories from "./components/TheCategories/TheCategories.vue";
@@ -23,7 +23,7 @@ import TheVideos from "./components/TheVideos/TheVideos.vue";
 export default {
   components: {
     TheHeader,
-    TheSidebarSmall,
+    TheSidebarCompact,
     TheSidebar,
     TheMobileSidebar,
     TheCategories,
@@ -32,27 +32,34 @@ export default {
 
   data() {
     return {
+      isCompactSidebarActive: false,
+      isCompactSidebarOpen: false,
       isMobileSidebarOpen: false,
-      sidebarState: null,
+      isSidebarOpen: false,
     };
   },
-  mounted() {
-    const width = window.innerWidth;
-
-    if (width >= 768 && width < 1280) {
-      this.sidebarState = "compact";
-    }
-    if (width >= 1280) {
-      this.sidebarState = "normal";
-    }
-  },
   methods: {
+    onResize() {
+      const width = window.innerWidth;
+
+      if (width < 768) {
+        this.isCompactSidebarOpen = false;
+        this.isSidebarOpen = false;
+      } else if (width < 1280) {
+        this.isCompactSidebarOpen = true;
+        this.isSidebarOpen = false;
+      } else {
+        this.isCompactSidebarOpen = this.isCompactSidebarActive;
+        this.isSidebarOpen = !this.isCompactSidebarActive;
+      }
+    },
     toggleSidebar() {
       const width = window.innerWidth;
 
       if (width >= 1280) {
-        this.sidebarState =
-          this.sidebarState === "normal" ? "compact" : "normal";
+        this.isCompactSidebarActive = !this.isCompactSidebarActive;
+
+        this.onResize();
       } else {
         this.openMobileSidebar();
       }
@@ -63,6 +70,19 @@ export default {
     closeMobileSidebar() {
       this.isMobileSidebarOpen = false;
     },
+  },
+  mounted() {
+    const width = window.innerWidth;
+
+    if (width >= 768 && width < 1280) {
+      this.isCompactSidebarActive = true;
+    }
+    if (width >= 1280) {
+      this.isCompactSidebarActive = false;
+    }
+
+    this.onResize();
+    window.addEventListener("resize", this.onResize);
   },
 };
 </script>
