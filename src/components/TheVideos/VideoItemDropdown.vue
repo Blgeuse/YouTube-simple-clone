@@ -55,9 +55,9 @@ export default {
     dropdownClasses() {
       return [
         "absolute",
-        // "top-9",
-        "-right-full",
-        "sm:right-0",
+        "z-10",
+        // "-right-full",
+        // "sm:right-0",
         "bg-white",
         "w-48",
         "rounded",
@@ -80,27 +80,65 @@ export default {
     getPositionClasses(event) {
       return [
         this.getTopClasses(event),
-        this.getRightClasses(),
-        this.getLeftClasses(),
+        this.getRightClasses(event),
+        this.getLeftClasses(event),
       ];
     },
     getTopClasses(event) {
-      const clickCordY = event.clientY;
+      const clickCoordY = event.clientY;
       const buttonHeight = event.currentTarget.offsetHeight;
       const dropdownHeight = this.$refs.dropdown.offsetHeight;
 
-      if (window.innerHeight - clickCordY < dropdownHeight) {
+      if (window.innerHeight - clickCoordY < dropdownHeight) {
         return `-top-14`;
       }
-      if (window.innerHeight - clickCordY < dropdownHeight + buttonHeight) {
-        return `top-0`
+      if (window.innerHeight - clickCoordY < dropdownHeight + buttonHeight) {
+        return `top-0`;
       }
       return `top-9`;
     },
-    getRightClasses() {
-      return;
+    getRightClasses(event) {
+      const clickCoordX = event.clientX;
+      const clickCoordY = event.clientY;
+      const dropdownWidth = this.$refs.dropdown.offsetWidth;
+      const dropdownHeight = this.$refs.dropdown.offsetHeight;
+      const buttonHeight = event.currentTarget.offsetHeight;
+
+      if (window.innerWidth - clickCoordX > dropdownWidth) {
+        return "right-auto";
+      }
+
+      if (window.innerHeight - clickCoordY > dropdownHeight + buttonHeight) {
+        return "right-0";
+      }
+
+      if (window.innerHeight - clickCoordY > dropdownHeight) {
+        return "right-8";
+      }
+
+      return "right-0";
     },
-    getLeftClasses() {},
+    getLeftClasses(event) {
+      const clickCoordX = event.clientX;
+      const clickCoordY = event.clientY;
+      const dropdownWidth = this.$refs.dropdown.offsetWidth;
+      const dropdownHeight = this.$refs.dropdown.offsetHeight;
+      const buttonHeight = event.currentTarget.offsetHeight;
+
+      if (window.innerWidth - clickCoordX < dropdownWidth) {
+        return "left-auto";
+      }
+
+      if (window.innerHeight - clickCoordY < dropdownHeight) {
+        return "left-auto";
+      }
+
+      if (window.innerHeight - clickCoordY > dropdownHeight + buttonHeight) {
+        return "left-auto";
+      }
+
+      return "left-8";
+    },
   },
   watch: {
     isOpen() {
