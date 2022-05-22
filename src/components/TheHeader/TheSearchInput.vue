@@ -7,7 +7,13 @@
 </template>
 
 <script>
-export default {};
+export default {
+  mounted() {
+    if (window.innerWidth < 640) {
+      this.$el.focus();
+    }
+  },
+};
 </script>
 
 <style></style>
