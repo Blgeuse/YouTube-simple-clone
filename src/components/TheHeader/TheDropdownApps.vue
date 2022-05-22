@@ -18,7 +18,7 @@
         ref="dropdown"
         @keydown.esc="isOpen = false"
         tabindex="-1"
-        class="absolute top-9 right-0 sm:left-0 bg-white w-60 border border-t-0 focus:outline-none"
+        :class="dropdownClasses"
       >
         <section class="py-2 border-b">
           <ul>
@@ -55,6 +55,18 @@ export default {
   data() {
     return {
       isOpen: false,
+      dropdownClasses: [
+        "z-10",
+        "absolute",
+        "top-9",
+        "right-0",
+        "sm:left-0",
+        "bg-white",
+        "w-60",
+        "border",
+        "border-t-0",
+        "focus:outline-none",
+      ],
     };
   },
   watch: {
@@ -62,6 +74,7 @@ export default {
       this.$nextTick(() => this.isOpen && this.$refs.dropdown.focus());
     },
   },
+
   mounted() {
     window.addEventListener("click", (event) => {
       if (!this.$el.contains(event.target)) {

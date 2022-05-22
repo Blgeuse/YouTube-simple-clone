@@ -1,6 +1,11 @@
 <template>
   <div class="relative">
-    <div class="h-full" @mouseenter="toggle" @mouseleave="toggle">
+    <div
+      class="flex items-center h-full"
+      @mouseenter="isShown = true"
+      @mouseleave="isShown = false"
+      @click="isShown = false"
+    >
       <slot />
     </div>
     <transition
@@ -23,10 +28,11 @@ export default {
       isShown: false,
     };
   },
-  props: { text: String },
-  methods: {
-    toggle() {
-      this.isShown = !this.isShown;
+  props: {
+    text: String,
+    top: {
+      type: Boolean,
+      default: false,
     },
   },
   computed: {
@@ -40,10 +46,10 @@ export default {
         "whitespace-nowrap",
         "p-2",
         "absolute",
-        "top-14",
         "left-1/2",
         "transform",
         "-translate-x-1/2",
+        this.top ? "bottom-12" : "top-14",
       ];
     },
   },
