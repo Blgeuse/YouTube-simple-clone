@@ -24,8 +24,16 @@
           v-if="selectedMenu === 'main'"
           @select-menu="showSelectdMenu"
         />
-        <TheDropdownMainAppearance
+        <TheDropdownSettingsAppearance
           v-else-if="selectedMenu === 'appearance'"
+          @select-menu="showSelectdMenu"
+        />
+        <TheDropdownSettingsLanguage
+          v-else-if="selectedMenu === 'language'"
+          @select-menu="showSelectdMenu"
+        />
+        <TheDropdownSettingsLocation
+          v-else-if="selectedMenu === 'location'"
           @select-menu="showSelectdMenu"
         />
       </div>
@@ -37,12 +45,16 @@
 import BaseIcon from "../BaseIcon.vue";
 import BaseTooltip from "../BaseTooltip.vue";
 import TheDropdownSettingsMain from "./TheDropdownSettingsMain.vue";
-import TheDropdownMainAppearance from "./TheDropdownMainAppearance.vue";
+import TheDropdownSettingsAppearance from "./TheDropdownSettingsAppearance.vue";
+import TheDropdownSettingsLanguage from "./TheDropdownSettingsLanguage.vue";
+import TheDropdownSettingsLocation from "./TheDropdownSettingsLocation.vue";
 export default {
   components: {
     BaseTooltip,
     BaseIcon,
-    TheDropdownMainAppearance,
+    TheDropdownSettingsLocation,
+    TheDropdownSettingsLanguage,
+    TheDropdownSettingsAppearance,
     TheDropdownSettingsMain,
   },
   data() {
