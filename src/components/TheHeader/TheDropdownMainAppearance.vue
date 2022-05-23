@@ -1,10 +1,21 @@
 <template>
-  <section class="py-2 border-b">
+  <section class="flex border-b border-gray-200 text-black">
+    <button class="px-3 focus:outline-none">
+      <BaseIcon name="arrowLeft" />
+    </button>
+    <span class="py-3">Appearance</span>
+  </section>
+  <section class="py-2">
+    <div class="text-gray-500 text-xs p-3">
+      Settings applies to this browser only
+    </div>
     <ul>
       <DropdownSettingsListItem
-        v-for="listItem in listItems"
-        :key="listItem.label"
-        :label="listItem.label"
+        v-for="(theme, themeId) in themes"
+        :key="themeId"
+        :label="theme"
+        :active="themeId === selectedThemeId"
+        @click="selectedThemeId = themeId"
       />
     </ul>
   </section>
@@ -12,21 +23,13 @@
 
 <script>
 import DropdownSettingsListItem from "./DropdownSettingsListItem.vue";
+import BaseIcon from "../BaseIcon.vue";
 export default {
-  components: { DropdownSettingsListItem },
+  components: { BaseIcon, DropdownSettingsListItem },
   data() {
     return {
-      listItems: [
-        {
-          label: "Use device theme",
-        },
-        {
-          label: "Dark theme",
-        },
-        {
-          label: "Light theme",
-        },
-      ],
+      selectedThemeId: 0,
+      themes: ["Use device theme", "Dark theme", "Light theme"],
     };
   },
 };
