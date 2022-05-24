@@ -7,7 +7,7 @@
         :label="listItem.label"
         :icon="listItem.icon"
         :with-sub-menu="listItem.withSubMenu"
-        @click.stop="$emit('select-menu', listItem.id)"
+        @click.stop="selectMenu(listItem)"
       />
     </ul>
   </section>
@@ -17,7 +17,7 @@
         :label="listItems[listItems.length - 1].label"
         :with-sub-menu="listItems[listItems.length - 1].withSubMenu"
         :icon="listItems[listItems.length - 1].icon"
-        @click.stop="$emit('select-menu', listItems[listItems.length - 1].id)"
+        @click.stop="selectMenu(listItems[listItems.length - 1])"
       />
     </ul>
   </section>
@@ -28,6 +28,11 @@ import DropdownSettingsListItem from "./DropdownSettingsListItem.vue";
 export default {
   components: { DropdownSettingsListItem },
   emits: ["select-menu"],
+  methods: {
+    selectMenu(listItem) {
+      listItem.withSubMenu && this.$emit("select-menu", listItem.id);
+    },
+  },
   data() {
     return {
       listItems: [
