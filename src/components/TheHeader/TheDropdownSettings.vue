@@ -36,6 +36,10 @@
           v-else-if="selectedMenu === 'location'"
           @select-menu="showSelectdMenu"
         />
+        <TheDropdownSettingsRestrictedMode
+          v-else-if="selectedMenu === 'restricted_mode'"
+          @select-menu="showSelectdMenu"
+        />
       </div>
     </transition>
   </div>
@@ -48,6 +52,7 @@ import TheDropdownSettingsMain from "./TheDropdownSettingsMain.vue";
 import TheDropdownSettingsAppearance from "./TheDropdownSettingsAppearance.vue";
 import TheDropdownSettingsLanguage from "./TheDropdownSettingsLanguage.vue";
 import TheDropdownSettingsLocation from "./TheDropdownSettingsLocation.vue";
+import TheDropdownSettingsRestrictedMode from "./TheDropdownSettingsRestrictedMode.vue";
 export default {
   components: {
     BaseTooltip,
@@ -56,6 +61,7 @@ export default {
     TheDropdownSettingsLanguage,
     TheDropdownSettingsAppearance,
     TheDropdownSettingsMain,
+    TheDropdownSettingsRestrictedMode,
   },
   data() {
     return {
