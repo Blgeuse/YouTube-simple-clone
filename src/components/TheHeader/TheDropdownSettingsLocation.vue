@@ -9,8 +9,8 @@
         v-for="(locationName, locationId) in location"
         :key="locationId"
         :label="locationName"
-        :active="locationId === selectedOptions.locationId"
-        @click="selectOption(locationId)"
+        :active="locationId === selectedOptions.location.id"
+        @click="selectOption({ id: locationId, text: locationName })"
       />
     </ul>
   </section>
@@ -26,13 +26,12 @@ export default {
   props: ["selectedOptions"],
   data() {
     return {
-      selectedLocationId: 0,
       location: ["English", "Russian"],
     };
   },
   methods: {
-    selectOption(locationId) {
-      this.$emit("select-option", { name: "locationId", value: locationId });
+    selectOption(location) {
+      this.$emit("select-option", { name: "location", value: location });
     },
   },
 };
