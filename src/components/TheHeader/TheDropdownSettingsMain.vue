@@ -27,7 +27,8 @@
 import DropdownSettingsListItem from "./DropdownSettingsListItem.vue";
 export default {
   components: { DropdownSettingsListItem },
-  emits: ["select-menu"],
+  props: ["selectedOptions"],
+  emits: ["select-menu", "select-option"],
   methods: {
     selectMenu(listItem) {
       listItem.withSubMenu && this.$emit("select-menu", listItem.id);

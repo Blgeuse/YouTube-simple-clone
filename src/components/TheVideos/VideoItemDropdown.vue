@@ -151,7 +151,7 @@ export default {
   },
   watch: {
     isOpen() {
-      document.body.classList.toggle("overflow-hidden");
+      // document.body.classList.toggle("overflow-hidden");
       this.$nextTick(() => this.isOpen && this.$refs.dropdown.focus());
     },
   },

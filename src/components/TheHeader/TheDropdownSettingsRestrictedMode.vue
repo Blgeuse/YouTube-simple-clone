@@ -10,7 +10,11 @@
     <p>This setting only applies to this browser.</p>
     <div class="text-gray-600 font-semibold items-center">
       <span class="uppercase mr-2">Activate restricted mode</span>
-      <input type="checkbox" />
+      <input
+        type="checkbox"
+        :checked="selectedOptions.restrictedMode"
+        @input="selectOption"
+      />
     </div>
   </section>
 </template>
@@ -20,7 +24,16 @@ import DropdownSettingsHeader from "./DropdownSettingsHeader.vue";
 
 export default {
   components: { DropdownSettingsHeader },
-  emits: ["select-menu"],
+  props: ["selectedOptions"],
+  emits: ["select-menu", "select-option"],
+  methods: {
+    selectOption($event) {
+      this.$emit("select-option", {
+        name: "restrictedMode",
+        value: $event.target.checked,
+      });
+    },
+  },
 };
 </script>
 

@@ -20,7 +20,12 @@
         tabindex="-1"
         :class="dropdownClasses"
       >
-        <component :is="menu" @select-menu="showSelectdMenu" />
+        <component
+          :is="menu"
+          @select-menu="showSelectdMenu"
+          @select-option="selectOption"
+          :selected-options="selectedOptions"
+        />
       </div>
     </transition>
   </div>
@@ -48,6 +53,12 @@ export default {
     return {
       isOpen: false,
       selectedMenu: "main",
+      selectedOptions: {
+        themeId: 0,
+        languageId: 0,
+        locationId: 0,
+        restrictedMode: false,
+      },
       dropdownClasses: [
         "z-10",
         "absolute",
@@ -90,6 +101,9 @@ export default {
       setTimeout(() => {
         this.selectedMenu = "main";
       }, 100);
+    },
+    selectOption(option) {
+      this.selectedOptions[option.name] = option.value;
     },
   },
   computed: {
