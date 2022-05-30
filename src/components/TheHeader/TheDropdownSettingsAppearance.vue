@@ -1,8 +1,5 @@
 <template>
-  <DropdownSettingsHeader
-    title="Appearance"
-    @back="$emit('select-menu', 'main')"
-  />
+  <DropdownSettingsHeader title="Appearance" @back="$emit('close')" />
   <section class="py-2">
     <div class="text-gray-500 text-xs p-3">
       Settings applies to this browser only
@@ -26,7 +23,7 @@ import DropdownSettingsHeader from "./DropdownSettingsHeader.vue";
 export default {
   components: { DropdownSettingsHeader, DropdownSettingsListItem },
   props: ["selectedOptions"],
-  emits: ["select-menu", "select-option"],
+  emits: ["close", "select-option"],
   data() {
     return {
       themes: ["Device theme", "Dark theme", "Light theme"],

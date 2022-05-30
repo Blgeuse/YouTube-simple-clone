@@ -2,22 +2,22 @@
   <section class="py-2 border-b">
     <ul>
       <DropdownSettingsListItem
-        v-for="listItem in listItems.slice(0, -1)"
-        :key="listItem.label"
-        :label="listItem.label"
-        :icon="listItem.icon"
-        :with-sub-menu="listItem.withSubMenu"
-        @click.stop="selectMenu(listItem)"
+        v-for="menuItem in menuItems.slice(0, -1)"
+        :key="menuItem.label"
+        :label="menuItem.label"
+        :icon="menuItem.icon"
+        :with-sub-menu="menuItem.withSubMenu"
+        @click.stop="selectMenu(menuItem)"
       />
     </ul>
   </section>
   <section class="py-2">
     <ul>
       <DropdownSettingsListItem
-        :label="listItems[listItems.length - 1].label"
-        :with-sub-menu="listItems[listItems.length - 1].withSubMenu"
-        :icon="listItems[listItems.length - 1].icon"
-        @click.stop="selectMenu(listItems[listItems.length - 1])"
+        :label="menuItems[menuItems.length - 1].label"
+        :with-sub-menu="menuItems[menuItems.length - 1].withSubMenu"
+        :icon="menuItems[menuItems.length - 1].icon"
+        @click.stop="selectMenu(menuItems[menuItems.length - 1])"
       />
     </ul>
   </section>
@@ -27,66 +27,12 @@
 import DropdownSettingsListItem from "./DropdownSettingsListItem.vue";
 export default {
   components: { DropdownSettingsListItem },
-  props: ["selectedOptions"],
-  emits: ["select-menu", "select-option"],
+  props: ["menuItems"],
+  emits: ["select-menu"],
   methods: {
-    selectMenu(listItem) {
-      listItem.withSubMenu && this.$emit("select-menu", listItem.id);
+    selectMenu(menuItem) {
+      menuItem.withSubMenu && this.$emit("select-menu", menuItem);
     },
-  },
-  data() {
-    return {
-      listItems: [
-        {
-          id: "appearance",
-          label: "Appearance: " + this.selectedOptions.theme.text,
-          icon: "sun",
-          withSubMenu: true,
-        },
-        {
-          id: "language",
-          label: "Language: " + this.selectedOptions.language.text,
-          icon: "translate",
-          withSubMenu: true,
-        },
-        {
-          id: "location",
-          label: "Location: " + this.selectedOptions.location.text,
-          icon: "globeAlt",
-          withSubMenu: true,
-        },
-        {
-          id: "settings",
-          label: "Settings",
-          icon: "shieldCheck",
-          withSubMenu: false,
-        },
-        {
-          id: "help",
-          label: "Help",
-          icon: "questionMarckCircle",
-          withSubMenu: false,
-        },
-        {
-          id: "send_feedback",
-          label: "Send feedback",
-          icon: "chatAlt",
-          withSubMenu: false,
-        },
-        {
-          id: "keyboard_shortcuts",
-          label: "Keyboard shortcuts",
-          icon: "calculator",
-          withSubMenu: false,
-        },
-        {
-          id: "restricted_mode",
-          label: "Restricted Mode: " + this.selectedOptions.restrictedMode.text,
-          icon: null,
-          withSubMenu: true,
-        },
-      ],
-    };
   },
 };
 </script>

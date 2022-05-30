@@ -1,8 +1,5 @@
 <template>
-  <DropdownSettingsHeader
-    title="Resticted Mode"
-    @back="$emit('select-menu', 'main')"
-  />
+  <DropdownSettingsHeader title="Resticted Mode" @back="$emit('close')" />
   <section class="py-4 px-3 space-y-4 text-black text-sm">
     <p>
       This helps hide potentially mature videos. No filter is 100% accurate.
@@ -25,7 +22,7 @@ import DropdownSettingsHeader from "./DropdownSettingsHeader.vue";
 export default {
   components: { DropdownSettingsHeader },
   props: ["selectedOptions"],
-  emits: ["select-menu", "select-option"],
+  emits: ["close", "select-option"],
   methods: {
     selectOption($event) {
       const enabled = $event.target.checked;
