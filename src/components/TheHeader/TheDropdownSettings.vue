@@ -104,8 +104,8 @@ export default {
     });
   },
   methods: {
-    selectMenu(menu) {
-      this.selectedMenu = menu;
+    selectMenu(menuItem) {
+      this.selectedMenu = menuItem;
       this.$refs.dropdown.focus();
     },
     toggle() {
