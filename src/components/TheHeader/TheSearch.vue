@@ -1,8 +1,8 @@
 <template>
   <div class="mr-2 flex w-full">
     <div class="relative flex w-full">
-      <TheSearchInput />
-      <TheSearchResults :results="keywords" />
+      <TheSearchInput v-model:query="query" />
+      <TheSearchResults v-show="query" :results="results" />
     </div>
     <TheSearchButton />
   </div>
@@ -20,6 +20,7 @@ export default {
   },
   data() {
     return {
+      query: "",
       keywords: [
         "new yourk giant",
         "new yourk alicia keys",
@@ -37,6 +38,11 @@ export default {
         "new yourk accent",
       ],
     };
+  },
+  computed: {
+    results() {
+      return this.keywords.filter((result) => result.includes(this.query));
+    },
   },
 };
 </script>
