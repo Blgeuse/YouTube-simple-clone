@@ -1,16 +1,15 @@
 <template>
   <div class="relative w-full">
     <input
-      :value="query"
-      @input="$emit('update:query', $event.target.value)"
       type="text"
       placeholder="Search"
       :class="classes"
+      v-model="searchQuery"
     />
     <button
-      v-show="query"
-      @click="$emit('update:query', '')"
       class="absolute top-0 right-0 h-full px-3 focus:outline-none"
+      v-show="query"
+      @click="searchQuery = ''"
     >
       <BaseIcon name="x" class="w-5 h5" />
     </button>
@@ -41,10 +40,20 @@ export default {
       ],
     };
   },
-  mounted() {
-    if (window.innerWidth < 640) {
-      this.$el.focus();
-    }
+  methods: {
+    updateQuery(query) {
+      this.$emit("update:query", query);
+    },
+  },
+  computed: {
+    searchQuery: {
+      get() {
+        return this.query;
+      },
+      set(searchQuery) {
+        return this.$emit("update:query", searchQuery);
+      },
+    },
   },
 };
 </script>
