@@ -2,9 +2,9 @@
   <div class="mr-2 flex w-full">
     <div class="relative flex w-full">
       <TheSearchInput
-        @focus="isSearchInputFocused = true"
-        @blur="isSearchInputFocused = false"
+        @change-state="toggleSearchResults"
         v-model:query="query"
+        :has-results="results.length"
       />
       <TheSearchResults v-show="isSearchResultsShown" :results="results" />
     </div>
@@ -41,7 +41,7 @@ export default {
         "new yourk giants live stream",
         "new yourk accent",
       ],
-      isSearchInputFocused: false,
+      isSearchResultsShown: false,
     };
   },
   computed: {
@@ -54,8 +54,10 @@ export default {
     trimmedQuery() {
       return this.query.replace(/\s+/g, " ").trim();
     },
-    isSearchResultsShown() {
-      return this.isSearchInputFocused && this.results.length;
+  },
+  methods: {
+    toggleSearchResults(isSearchInputActive) {
+      this.isSearchResultsShown = isSearchInputActive && this.results.length;
     },
   },
 };

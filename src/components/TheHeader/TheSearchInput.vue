@@ -2,10 +2,14 @@
   <div class="relative w-full">
     <input
       type="text"
-      v-bind="$attrs"
       placeholder="Search"
+      ref="input"
       :class="classes"
       v-model="searchQuery"
+      @click="setState(true)"
+      @focus="setState(true)"
+      @blur="setState(false)"
+      @keyup.esc="hendleEsc"
     />
     <button
       class="absolute top-0 right-0 h-full px-3 focus:outline-none"
@@ -24,10 +28,11 @@ export default {
   components: {
     BaseIcon,
   },
-  props: ["query"],
-  emits: ["update:query"],
+  props: ["query", "has-results"],
+  emits: ["update:query", "change-state"],
   data() {
     return {
+      isActive: false,
       classes: [
         "w-full",
         "h-full",
@@ -42,19 +47,33 @@ export default {
       ],
     };
   },
-  methods: {
-    updateQuery(query) {
-      this.$emit("update:query", query);
-    },
-  },
   computed: {
     searchQuery: {
       get() {
         return this.query;
       },
       set(searchQuery) {
-        return this.$emit("update:query", searchQuery);
+        this.$emit("update:query", searchQuery);
+        this.setState(this.isActive);
       },
+    },
+  },
+  methods: {
+    setState(isActive) {
+      this.isActive = isActive;
+      this.$emit("change-state", isActive);
+    },
+    hendleEsc() {
+      this.removeSelection();
+
+      this.isActive && this.hasResults
+        ? this.setState(false)
+        : this.$refs.input.blur();
+    },
+    removeSelection() {
+      const end = this.$refs.input.value.length;
+
+      this.$refs.input.setSelectionRange(end, end);
     },
   },
 };
