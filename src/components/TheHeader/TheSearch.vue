@@ -1,8 +1,12 @@
 <template>
   <div class="mr-2 flex w-full">
     <div class="relative flex w-full">
-      <TheSearchInput v-model:query="query" />
-      <TheSearchResults v-show="results.length" :results="results" />
+      <TheSearchInput
+        @focus="isSearchInputFocused = true"
+        @blur="isSearchInputFocused = false"
+        v-model:query="query"
+      />
+      <TheSearchResults v-show="isSearchResultsShown" :results="results" />
     </div>
     <TheSearchButton />
   </div>
@@ -37,6 +41,7 @@ export default {
         "new yourk giants live stream",
         "new yourk accent",
       ],
+      isSearchInputFocused: false,
     };
   },
   computed: {
@@ -48,6 +53,9 @@ export default {
     },
     trimmedQuery() {
       return this.query.replace(/\s+/g, " ").trim();
+    },
+    isSearchResultsShown() {
+      return this.isSearchInputFocused && this.results.length;
     },
   },
 };

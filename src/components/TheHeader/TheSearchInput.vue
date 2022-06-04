@@ -2,6 +2,7 @@
   <div class="relative w-full">
     <input
       type="text"
+      v-bind="$attrs"
       placeholder="Search"
       :class="classes"
       v-model="searchQuery"
@@ -19,6 +20,7 @@
 <script>
 import BaseIcon from "../BaseIcon.vue";
 export default {
+  inheritAttrs: false,
   components: {
     BaseIcon,
   },
