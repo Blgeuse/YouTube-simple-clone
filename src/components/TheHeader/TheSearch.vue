@@ -22,9 +22,11 @@ export default {
     TheSearchResults,
     TheSearchButton,
   },
+  props: ["searchQuery"],
+  emits: ["update-search-query"],
   data() {
     return {
-      query: "",
+      query: this.searchQuery,
       keywords: [
         "new yourk giant",
         "new yourk alicia keys",
@@ -43,6 +45,11 @@ export default {
       ],
       isSearchResultsShown: false,
     };
+  },
+  watch: {
+    query(query) {
+      this.$emit("update-search-query", query);
+    },
   },
   computed: {
     results() {

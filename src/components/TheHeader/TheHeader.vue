@@ -17,18 +17,17 @@
         <LogoMain />
       </div>
     </div>
-    <TheSearchMobile @close="closeMobileSearch" v-if="isMobileSearchShown" />
-    <div
+    <TheSearchMobile
+      :search-query="searchQuery"
+      @close="closeMobileSearch"
+      @update-search-query="searchQuery = $event"
+      v-if="isMobileSearchShown"
+    />
+    <TheSearchMain
+      @update-search-query="searchQuery = $event"
+      :search-query="searchQuery"
       v-else
-      class="hidden sm:flex items-center justify-end p-2.5 pl-8 md:pl-12 md:px-8 flex-1 lg:px-0 lg:w-1/2 max-w-screen-md"
-    >
-      <TheSearch />
-      <BaseTooltip text="Search with your voice">
-        <button class="p-2 focus:outline-none">
-          <BaseIcon name="microphone" class="w-5 h-5" />
-        </button>
-      </BaseTooltip>
-    </div>
+    />
     <div
       :class="[
         'flex',
@@ -64,13 +63,13 @@
 </template>
 
 <script>
-import BaseIcon from "../BaseIcon.vue";
-import BaseTooltip from "../BaseTooltip.vue";
 import LogoMain from "./LogoMain.vue";
-import TheSearch from "./TheSearch.vue";
-import TheSearchMobile from "../TheSearchMobile/TheSearchMobile.vue";
 import TheDropdownApps from "./TheDropdownApps.vue";
 import TheDropdownSettings from "./TheDropdownSettings.vue";
+import TheSearchMain from "./TheSearchMain.vue";
+import BaseIcon from "../BaseIcon.vue";
+import BaseTooltip from "../BaseTooltip.vue";
+import TheSearchMobile from "../TheSearchMobile/TheSearchMobile.vue";
 import ButtonLogin from "../ButtonLogin.vue";
 
 export default {
@@ -78,8 +77,8 @@ export default {
     BaseTooltip,
     BaseIcon,
     LogoMain,
-    TheSearch,
     TheSearchMobile,
+    TheSearchMain,
     TheDropdownSettings,
     TheDropdownApps,
     ButtonLogin,
@@ -89,6 +88,7 @@ export default {
   },
   data() {
     return {
+      searchQuery: "",
       isSmallScren: false,
       isMobileSearchActive: false,
       classes: [
