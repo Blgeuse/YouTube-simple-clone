@@ -5,8 +5,14 @@
         @change-state="toggleSearchResults"
         v-model:query="query"
         :has-results="results.length"
+        @keyup.up="handlePreviousSearchResult"
+        @keyup.down="handleNextSearchResult"
       />
-      <TheSearchResults v-show="isSearchResultsShown" :results="results" />
+      <TheSearchResults
+        :active-result-id="activeSearchResultId"
+        v-show="isSearchResultsShown"
+        :results="results"
+      />
     </div>
     <TheSearchButton />
   </div>
@@ -44,6 +50,7 @@ export default {
         "new yourk accent",
       ],
       isSearchResultsShown: false,
+      activeSearchResultId: null,
     };
   },
   watch: {
@@ -65,6 +72,38 @@ export default {
   methods: {
     toggleSearchResults(isSearchInputActive) {
       this.isSearchResultsShown = isSearchInputActive && this.results.length;
+    },
+    handlePreviousSearchResult() {
+      if (this.isSearchResultsShown) {
+        this.makePreviousSearchResultActive();
+      } else {
+        this.toggleSearchResults(true);
+      }
+    },
+    handleNextSearchResult() {
+      if (this.isSearchResultsShown) {
+        this.makeNextSearchResultActive();
+      } else {
+        this.toggleSearchResults(true);
+      }
+    },
+    makeNextSearchResultActive() {
+      if (this.activeSearchResultId === null) {
+        this.activeSearchResultId = 0;
+      } else if (this.activeSearchResultId + 1 === this.results.length) {
+        this.activeSearchResultId = null;
+      } else {
+        this.activeSearchResultId++;
+      }
+    },
+    makePreviousSearchResultActive() {
+      if (this.activeSearchResultId === null) {
+        this.activeSearchResultId = this.results.length - 1;
+      } else if (this.activeSearchResultId === 0) {
+        this.activeSearchResultId = null;
+      } else {
+        this.activeSearchResultId--;
+      }
     },
   },
 };

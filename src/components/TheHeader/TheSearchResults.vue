@@ -1,8 +1,8 @@
 <template>
   <div :class="classes">
     <ul>
-      <li :class="itemClasses" v-for="result in results" :key="result">
-        {{ result }}
+      <li :class="itemClasses(id)" v-for="(text, id) in results" :key="text">
+        {{ text }}
       </li>
     </ul>
     <a :class="reportLinkClasses" herf="#">Report search predictions</a>
@@ -11,7 +11,7 @@
 
 <script>
 export default {
-  props: ["results"],
+  props: ["results", "activeResultId"],
   computed: {
     classes() {
       return [
@@ -27,8 +27,8 @@ export default {
       ];
     },
     itemClasses() {
-      return [
-        "hover:bg-gray-100",
+      return (resultId) => [
+        resultId === this.activeResultId ? "bg-gray-200" : "hover:bg-gray-100",
         "text-black",
         "px-3",
         "py-1",
