@@ -3,10 +3,12 @@
     <div class="relative flex w-full">
       <TheSearchInput
         @change-state="toggleSearchResults"
+        @update:query="updateSearchResults"
         v-model:query="query"
         :has-results="results.length"
         @keyup.up="handlePreviousSearchResult"
         @keyup.down="handleNextSearchResult"
+        @keydown.up.prevent
       />
       <TheSearchResults
         :active-result-id="activeSearchResultId"
@@ -51,6 +53,8 @@ export default {
       ],
       isSearchResultsShown: false,
       activeSearchResultId: null,
+      resutls: [],
+      activeQuery: this.searchQuerh,
     };
   },
   watch: {
@@ -59,19 +63,26 @@ export default {
     },
   },
   computed: {
-    results() {
-      if (!this.query) return [];
-      return this.keywords.filter((result) =>
-        result.includes(this.trimmedQuery)
-      );
-    },
     trimmedQuery() {
       return this.query.replace(/\s+/g, " ").trim();
     },
   },
   methods: {
+    updateSearchResults() {
+      this.activeSearchResultId = null;
+      this.activeQuery = this.query;
+
+      if (this.query === "") {
+        this.results = [];
+      } else {
+        this.resutls = this.keywords.filter((result) =>
+          result.includes(this.trimmedQuery)
+        );
+      }
+    },
     toggleSearchResults(isSearchInputActive) {
-      this.isSearchResultsShown = isSearchInputActive && this.results.length;
+      this.isSearchResultsShown =
+        isSearchInputActive && this.results.length;
     },
     handlePreviousSearchResult() {
       if (this.isSearchResultsShown) {
@@ -90,11 +101,16 @@ export default {
     makeNextSearchResultActive() {
       if (this.activeSearchResultId === null) {
         this.activeSearchResultId = 0;
-      } else if (this.activeSearchResultId + 1 === this.results.length) {
+      } else if (
+        this.activeSearchResultId + 1 ===
+        this.results.length
+      ) {
         this.activeSearchResultId = null;
       } else {
         this.activeSearchResultId++;
       }
+
+      this.updateQueryWithSearchResults();
     },
     makePreviousSearchResultActive() {
       if (this.activeSearchResultId === null) {
@@ -104,6 +120,14 @@ export default {
       } else {
         this.activeSearchResultId--;
       }
+
+      this.updateQueryWithSearchResults();
+    },
+    updateQueryWithSearchResults() {
+      const hasActiveSortResutl = this.activeSearchResultId !== null;
+      this.query = hasActiveSortResutl
+        ? this.results[this.activeSearchResultId]
+        : this.activeQuery;
     },
   },
 };
