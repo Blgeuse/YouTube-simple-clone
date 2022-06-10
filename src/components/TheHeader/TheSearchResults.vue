@@ -1,7 +1,14 @@
 <template>
   <div :class="classes">
     <ul>
-      <li :class="itemClasses(id)" v-for="(text, id) in results" :key="text">
+      <li
+        v-for="(text, id) in results"
+        :key="text"
+        :class="itemClasses(id)"
+        @mouseenter="$emit('search-result-mouseenter', id)"
+        @mouseleave="$emit('search-result-mouseleave', id)"
+        @click.stop="$emit('search-result-click', id)"
+      >
         {{ text }}
       </li>
     </ul>
@@ -28,7 +35,7 @@ export default {
     },
     itemClasses() {
       return (resultId) => [
-        resultId === this.activeResultId ? "bg-gray-200" : "hover:bg-gray-100",
+        resultId === this.activeResultId ? "bg-gray-200" : "bg-transparent",
         "text-black",
         "px-3",
         "py-1",

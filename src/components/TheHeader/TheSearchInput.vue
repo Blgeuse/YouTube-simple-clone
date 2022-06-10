@@ -6,9 +6,8 @@
       ref="input"
       :class="classes"
       v-model="searchQuery"
-      @click="setState(true)"
+      @click.stop="setState(true)"
       @focus="setState(true)"
-      @blur="setState(false)"
       @keyup.esc="hendleEsc"
     />
     <button

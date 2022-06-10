@@ -2,18 +2,21 @@
   <div class="mr-2 flex w-full">
     <div class="relative flex w-full">
       <TheSearchInput
-        @change-state="toggleSearchResults"
-        @update:query="updateSearchResults"
         v-model:query="query"
         :has-results="results.length"
+        @change-state="toggleSearchResults"
+        @update:query="updateSearchResults"
         @keyup.up="handlePreviousSearchResult"
         @keyup.down="handleNextSearchResult"
         @keydown.up.prevent
       />
       <TheSearchResults
-        :active-result-id="activeSearchResultId"
         v-show="isSearchResultsShown"
+        :active-result-id="activeSearchResultId"
         :results="results"
+        @search-result-mouseenter="activeSearchResultId = $event"
+        @search-result-mouseleave="activeSearchResultId = null"
+        @search-result-click="selectSearchResult"
       />
     </div>
     <TheSearchButton />
@@ -32,6 +35,12 @@ export default {
   },
   props: ["searchQuery"],
   emits: ["update-search-query"],
+  mounted() {
+    document.addEventListener("click", this.handleClick);
+  },
+  beforeUnmount() {
+    document.removeEventListener("click", this.handleClick);
+  },
   data() {
     return {
       query: this.searchQuery,
@@ -53,7 +62,7 @@ export default {
       ],
       isSearchResultsShown: false,
       activeSearchResultId: null,
-      resutls: [],
+      results: [],
       activeQuery: this.searchQuerh,
     };
   },
@@ -68,6 +77,9 @@ export default {
     },
   },
   methods: {
+    handleClick() {
+      this.toggleSearchResults(false);
+    },
     updateSearchResults() {
       this.activeSearchResultId = null;
       this.activeQuery = this.query;
@@ -75,14 +87,13 @@ export default {
       if (this.query === "") {
         this.results = [];
       } else {
-        this.resutls = this.keywords.filter((result) =>
+        this.results = this.keywords.filter((result) =>
           result.includes(this.trimmedQuery)
         );
       }
     },
     toggleSearchResults(isSearchInputActive) {
-      this.isSearchResultsShown =
-        isSearchInputActive && this.results.length;
+      this.isSearchResultsShown = isSearchInputActive && this.results.length;
     },
     handlePreviousSearchResult() {
       if (this.isSearchResultsShown) {
@@ -101,10 +112,7 @@ export default {
     makeNextSearchResultActive() {
       if (this.activeSearchResultId === null) {
         this.activeSearchResultId = 0;
-      } else if (
-        this.activeSearchResultId + 1 ===
-        this.results.length
-      ) {
+      } else if (this.activeSearchResultId + 1 === this.results.length) {
         this.activeSearchResultId = null;
       } else {
         this.activeSearchResultId++;
@@ -128,6 +136,13 @@ export default {
       this.query = hasActiveSortResutl
         ? this.results[this.activeSearchResultId]
         : this.activeQuery;
+    },
+    selectSearchResult(searchResultId) {
+      this.query = this.results[searchResultId];
+
+      this.updateSearchResults();
+
+      this.toggleSearchResults(false);
     },
   },
 };
