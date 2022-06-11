@@ -34,17 +34,14 @@ export default {
     TheSearchResults,
     TheSearchButton,
   },
-  props: ["searchQuery"],
-  emits: ["update-search-query"],
   mounted() {
-    document.addEventListener("click", this.handleClick);
-  },
-  beforeUnmount() {
-    document.removeEventListener("click", this.handleClick);
+    window.addEventListener("click", this.onClickAndResize);
+    window.addEventListener("resize", this.onClickAndResize);
   },
   data() {
     return {
-      query: this.searchQuery,
+      query: "",
+      activeQuery: "",
       keywords: [
         "new yourk giant",
         "new yourk alicia keys",
@@ -64,13 +61,7 @@ export default {
       isSearchResultsShown: false,
       activeSearchResultId: null,
       results: [],
-      activeQuery: this.searchQuerh,
     };
-  },
-  watch: {
-    query(query) {
-      this.$emit("update-search-query", query);
-    },
   },
   computed: {
     trimmedQuery() {
@@ -78,7 +69,7 @@ export default {
     },
   },
   methods: {
-    handleClick() {
+    onClickAndResize() {
       this.toggleSearchResults(false);
     },
     updateSearchResults() {
