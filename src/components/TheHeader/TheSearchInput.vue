@@ -9,6 +9,7 @@
       @click.stop="setState(true)"
       @focus="setState(true)"
       @keyup.esc="hendleEsc"
+      @keydown.enter="handleEnter"
     />
     <button
       class="absolute top-0 right-0 h-full px-3 focus:outline-none"
@@ -27,7 +28,7 @@ export default {
     BaseIcon,
   },
   props: ["query", "has-results"],
-  emits: ["update:query", "change-state"],
+  emits: ["update:query", "change-state", "enter"],
   data() {
     return {
       isActive: false,
@@ -67,6 +68,18 @@ export default {
     },
   },
   methods: {
+    handleEnter() {
+      this.setState(false);
+
+      this.$refs.input.blur();
+
+      this.$emit("enter");
+    },
+    removeSelection() {
+      const end = this.$refs.input.value.length;
+
+      this.$refs.input.setSelectionRange(end, end);
+    },
     onKeydonw(event) {
       const isInputFocused = this.$refs.input === document.activeElement;
       if (event.code === "Slash" && !isInputFocused) {
@@ -84,11 +97,6 @@ export default {
       this.isActive && this.hasResults
         ? this.setState(false)
         : this.$refs.input.blur();
-    },
-    removeSelection() {
-      const end = this.$refs.input.value.length;
-
-      this.$refs.input.setSelectionRange(end, end);
     },
     clear() {
       this.searchQuery = "";

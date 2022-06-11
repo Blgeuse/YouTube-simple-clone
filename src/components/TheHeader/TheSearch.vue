@@ -8,6 +8,7 @@
         @update:query="updateSearchResults"
         @keyup.up="handlePreviousSearchResult"
         @keyup.down="handleNextSearchResult"
+        @enter="selectSearchResult"
         @keydown.up.prevent
       />
       <TheSearchResults
@@ -19,7 +20,7 @@
         @search-result-click="selectSearchResult"
       />
     </div>
-    <TheSearchButton />
+    <TheSearchButton @click.stop="selectSearchResult" />
   </div>
 </template>
 
@@ -93,11 +94,13 @@ export default {
       }
     },
     toggleSearchResults(isSearchInputActive) {
-      this.isSearchResultsShown = isSearchInputActive && this.results.length;
+      this.isSearchResultsShown =
+        isSearchInputActive && this.results.length > 0;
     },
     handlePreviousSearchResult() {
       if (this.isSearchResultsShown) {
         this.makePreviousSearchResultActive();
+        this.updateQueryWithSearchResults();
       } else {
         this.toggleSearchResults(true);
       }
@@ -105,6 +108,7 @@ export default {
     handleNextSearchResult() {
       if (this.isSearchResultsShown) {
         this.makeNextSearchResultActive();
+        this.updateQueryWithSearchResults();
       } else {
         this.toggleSearchResults(true);
       }
@@ -117,8 +121,6 @@ export default {
       } else {
         this.activeSearchResultId++;
       }
-
-      this.updateQueryWithSearchResults();
     },
     makePreviousSearchResultActive() {
       if (this.activeSearchResultId === null) {
@@ -128,8 +130,6 @@ export default {
       } else {
         this.activeSearchResultId--;
       }
-
-      this.updateQueryWithSearchResults();
     },
     updateQueryWithSearchResults() {
       const hasActiveSortResutl = this.activeSearchResultId !== null;
@@ -137,12 +137,14 @@ export default {
         ? this.results[this.activeSearchResultId]
         : this.activeQuery;
     },
-    selectSearchResult(searchResultId) {
-      this.query = this.results[searchResultId];
-
-      this.updateSearchResults();
+    selectSearchResult() {
+      this.query = this.activeSearchResultId
+        ? this.results[this.activeSearchResultId]
+        : this.query;
 
       this.toggleSearchResults(false);
+
+      this.updateSearchResults();
     },
   },
 };

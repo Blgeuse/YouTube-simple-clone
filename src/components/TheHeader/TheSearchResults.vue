@@ -4,12 +4,14 @@
       <li
         v-for="(text, id) in results"
         :key="text"
-        :class="itemClasses(id)"
+        :class="getItemClasses(id)"
         @mouseenter="$emit('search-result-mouseenter', id)"
-        @mouseleave="$emit('search-result-mouseleave', id)"
-        @click.stop="$emit('search-result-click', id)"
+        @mouseleave="$emit('search-result-mouseleave')"
+        @click.stop="$emit('search-result-click')"
       >
-        {{ text }}
+        <span @mouseenter="$emit('search-result-mouseenter', id)">{{
+          text
+        }}</span>
       </li>
     </ul>
     <a :class="reportLinkClasses" herf="#">Report search predictions</a>
@@ -19,9 +21,21 @@
 <script>
 export default {
   props: ["results", "activeResultId"],
-  computed: {
-    classes() {
+  methods: {
+    getItemClasses(resultId) {
       return [
+        resultId === this.activeResultId ? "bg-gray-200" : "bg-transparent",
+        "text-black",
+        "px-3",
+        "py-1",
+        "select-none",
+        "truncate",
+      ];
+    },
+  },
+  data() {
+    return {
+      classes: [
         "absolute",
         "top-full",
         "w-full",
@@ -31,20 +45,8 @@ export default {
         "border-gray-300",
         "shadow-md",
         "pt-4",
-      ];
-    },
-    itemClasses() {
-      return (resultId) => [
-        resultId === this.activeResultId ? "bg-gray-200" : "bg-transparent",
-        "text-black",
-        "px-3",
-        "py-1",
-        "select-none",
-        "truncate",
-      ];
-    },
-    reportLinkClasses() {
-      return [
+      ],
+      reportLinkClasses: [
         "w-full",
         "inline-block",
         "text-right",
@@ -53,8 +55,8 @@ export default {
         "text-gray-500",
         "hover:text-black",
         "pr-2",
-      ];
-    },
+      ],
+    };
   },
 };
 </script>
