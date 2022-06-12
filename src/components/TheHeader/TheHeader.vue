@@ -18,9 +18,9 @@
       </div>
     </div>
     <TheSearchWrapper
+      v-show="isSearchShown"
       :is-small-scren="isSmallScren"
       @close="closeMobileSearch"
-      v-show="isSearchShown"
     />
 
     <div
@@ -65,6 +65,7 @@ import BaseIcon from "../BaseIcon.vue";
 import BaseTooltip from "../BaseTooltip.vue";
 import TheSearchWrapper from "../TheSearchWrapper/TheSearchWrapper.vue";
 import ButtonLogin from "../ButtonLogin.vue";
+import { computed } from "vue";
 
 export default {
   components: {
@@ -78,6 +79,11 @@ export default {
   },
   emits: {
     toggleSidebar: null,
+  },
+  provide() {
+    return {
+      isMobileSearchActive: computed(() => this.isMobileSearchActive),
+    };
   },
   data() {
     return {

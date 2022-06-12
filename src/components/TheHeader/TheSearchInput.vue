@@ -29,6 +29,7 @@ export default {
   },
   props: ["query", "has-results"],
   emits: ["update:query", "change-state", "enter"],
+  inject: ["isMobileSearchActive"],
   data() {
     return {
       isActive: false,
@@ -45,6 +46,13 @@ export default {
         "focus:outline-none",
       ],
     };
+  },
+  watch: {
+    "isMobileSearchActive.value"(isMobileSearchActive) {
+      if (isMobileSearchActive) {
+        this.$nextTick(() => this.$refs.input.focus());
+      }
+    },
   },
   mounted() {
     if (window.innerWidth < 640) {
