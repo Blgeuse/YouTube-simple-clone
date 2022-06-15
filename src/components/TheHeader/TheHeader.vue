@@ -1,12 +1,6 @@
 <template>
   <header :class="classes">
-    <div
-      :class="[
-        'lg:w-1/4',
-        'flex',
-        isMobileSearchActive ? 'opacity-0' : 'opacity-100',
-      ]"
-    >
+    <div :class="leftSideClasses">
       <div class="flex items-center xl:w-64 xl:bg-white pl-4">
         <button
           @click="$emit('toggleSidebar')"
@@ -23,18 +17,7 @@
       @close="closeMobileSearch"
     />
 
-    <div
-      :class="[
-        'flex',
-        'items-center',
-        'justify-end',
-        'lg:w-1/4',
-        'sm:space-x-3',
-        'p-2',
-        'sm:px-4',
-        isMobileSearchShown ? 'opacity-0' : 'opacity-100',
-      ]"
-    >
+    <div :class="rightSideClasses">
       <BaseTooltip text="Search with your voice">
         <button class="sm:hidden p-2 focus:outline-none">
           <BaseIcon name="microphone" class="w-5 h-5" />
@@ -108,6 +91,24 @@ export default {
     },
     isSearchShown() {
       return this.isMobileSearchShown || !this.isSmallScren;
+    },
+    opacity() {
+      return this.isMobileSearchShown ? "opacity-0" : "opacity-100";
+    },
+    leftSideClasses() {
+      return ["lg:w-1/4", "flex", this.opacity];
+    },
+    rightSideClasses() {
+      return [
+        "flex",
+        "items-center",
+        "justify-end",
+        "lg:w-1/4",
+        "sm:space-x-3",
+        "p-2",
+        "sm:px-4",
+        this.opacity,
+      ];
     },
   },
   methods: {

@@ -58,11 +58,7 @@ export default {
     if (window.innerWidth < 640) {
       this.$refs.input.focus();
     }
-
     document.addEventListener("keydown", this.onKeydonw);
-  },
-  beforeUnmount() {
-    document.removeEventListener("keydonw", this.onKeydonw);
   },
   computed: {
     searchQuery: {
