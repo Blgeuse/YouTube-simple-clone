@@ -12,7 +12,7 @@
       <BaseModalOverlay v-if="isOpen" @click="close" />
     </transition>
 
-    <div v-if="isOpen" class="relative bg-white w-2/3 m-8">
+    <div v-if="isOpen" class="relative bg-white w-full sm:w-2/3 m-8">
       <div v-if="withCloseButton" class="p-2 text-right">
         <BaseModalButtonClose @click="close" />
       </div>
@@ -49,6 +49,7 @@ export default {
         "flex",
         "justify-center",
         "items-start",
+        "mx-auto",
       ],
     };
   },
