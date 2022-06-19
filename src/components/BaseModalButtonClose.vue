@@ -1,6 +1,6 @@
 <template>
   <button class="p-2 focus:outline:none">
-    <BaseIcons name="x" />
+    <BaseIcon name="x" />
   </button>
 </template>
 
