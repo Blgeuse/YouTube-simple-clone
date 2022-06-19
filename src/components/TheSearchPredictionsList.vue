@@ -6,13 +6,13 @@
       :key="label"
     >
       <BaseCheckbox
-        :id="index"
+        :id="`search-prediction-${index}`"
         :value="label"
         v-bind="$attrs"
         v-model="modelValue"
       >
         {{ label }}
-      </BaseCheckbox> 
+      </BaseCheckbox>
     </div>
   </div>
 </template>
