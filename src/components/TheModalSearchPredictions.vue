@@ -13,7 +13,7 @@
       :categories="searchPredictionCategories"
     />
     <div class="text-black text-sm mt-6">
-      <BaseTextarea :limit="10" v-model="searchPredictionDetails" />
+      <BaseTextarea :limit="500" v-model="searchPredictionDetails" />
     </div>
 
     <template #footer="{ close }">
