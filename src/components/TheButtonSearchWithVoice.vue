@@ -10,9 +10,8 @@
     </button>
   </div>
   <div :class="buttonHintClasses">Tap the microphone to try again</div>
-  -
 </template>
-
+  
 <script>
 import BaseIcon from "./BaseIcon.vue";
 
