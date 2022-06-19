@@ -43,7 +43,10 @@
     </div>
   </header>
   <teleport to="body">
-    <BaseModal v-if="isVoiceModalOpen" @close="isVoiceModalOpen = false" />
+    <TheModalSearchWithVoice
+      v-if="isVoiceModalOpen"
+      @close="isVoiceModalOpen = false"
+    />
   </teleport>
 </template>
 
@@ -53,7 +56,7 @@ import TheDropdownApps from "./TheDropdownApps.vue";
 import TheDropdownSettings from "./TheDropdownSettings.vue";
 import BaseIcon from "../BaseIcon.vue";
 import BaseTooltip from "../BaseTooltip.vue";
-import BaseModal from "../BaseModal.vue";
+import TheModalSearchWithVoice from "../TheModalSearchWithVoice.vue";
 import TheSearchWrapper from "../TheSearchWrapper/TheSearchWrapper.vue";
 import ButtonLogin from "../ButtonLogin.vue";
 import { computed } from "vue";
@@ -62,7 +65,7 @@ export default {
   components: {
     BaseTooltip,
     BaseIcon,
-    BaseModal,
+    TheModalSearchWithVoice,
     LogoMain,
     TheSearchWrapper,
     TheDropdownSettings,
