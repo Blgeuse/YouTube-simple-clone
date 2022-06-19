@@ -1,22 +1,11 @@
 <template>
   <BaseModal class="md:w-4/5 max-w-2xl">
     <p class="text-base text-black tracking-wide">Report search predictions</p>
-    <div class="space-y-3 text-black text-sm mt-5">
-      <div
-        class="flex items-center"
-        v-for="(label, index) in searchPredictions"
-        :key="label"
-      >
-        <input
-          class="w-5 h-5 cursor-pointer"
-          type="checkbox"
-          v-model="selectedSearchPredictions"
-          :id="index"
-          :value="label"
-        />
-        <label class="pl-4 cursor-pointer flex-grow" :for="index">{{ label }}</label>
-      </div>
-    </div>
+
+    <TheSearchPredictionsList
+      v-model="selectedSearchPredictions"
+      :search-predictions="searchPredictions"
+    />
 
     <template #footer="{ close }">
       <button
@@ -36,11 +25,13 @@
 </template>
 
 <script>
+import TheSearchPredictionsList from "./TheSearchPredictionsList.vue";
 import BaseModal from "./BaseModal.vue";
 
 export default {
   emits: ["close"],
   components: {
+    TheSearchPredictionsList,
     BaseModal,
   },
   data() {
