@@ -30,6 +30,9 @@ import BaseModal from "./BaseModal.vue";
 
 export default {
   emits: ["close"],
+  props: {
+    searchPredictions: Array,
+  },
   components: {
     TheSearchPredictionsList,
     BaseModal,
@@ -37,21 +40,6 @@ export default {
   data() {
     return {
       selectedSearchPredictions: [],
-      searchPredictions: [
-        "new york",
-        "new york song",
-        "new york alicia keys",
-        "new york state of mind",
-        "new york accent",
-        "new york nagaram whatsapp status",
-        "new york song tik tok",
-        "new york new york frank sinatra",
-        "new york nagaram",
-        "new york jazz",
-        "new york full movie",
-        "new york vlog",
-        "new york jay z",
-      ],
     };
   },
 };

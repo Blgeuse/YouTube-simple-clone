@@ -5,36 +5,27 @@
       v-for="(label, index) in searchPredictions"
       :key="label"
     >
-      <input
-        class="w-5 h-5 cursor-pointer"
-        type="checkbox"
-        v-model="selectedSearchPredictions"
+      <BaseCheckbox
         :id="index"
         :value="label"
-      />
-      <label class="pl-4 cursor-pointer flex-grow" :for="index">{{
-        label
-      }}</label>
+        v-bind="$attrs"
+        v-model="modelValue"
+      >
+        {{ label }}
+      </BaseCheckbox> 
     </div>
   </div>
 </template>
 
 <script>
+import BaseCheckbox from "./BaseCheckbox.vue";
 export default {
+  components: {
+    BaseCheckbox,
+  },
   props: {
     searchPredictions: Array,
     modelValue: Array,
-  },
-  emits: ["update:modelValue"],
-  data() {
-    return {
-      selectedSearchPredictions: this.modelValue,
-    };
-  },
-  watch: {
-    selectedSearchPredictions() {
-      this.$emit("update:modelValue", this.selectedSearchPredictions);
-    },
   },
 };
 </script>
