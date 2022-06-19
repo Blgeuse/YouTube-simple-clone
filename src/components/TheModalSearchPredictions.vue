@@ -12,6 +12,9 @@
       v-model="selectedSearchPredictionCategory"
       :categories="searchPredictionCategories"
     />
+    <div class="text-black text-sm mt-6">
+      <BaseTextarea v-model="searchPredictionDetails" />
+    </div>
 
     <template #footer="{ close }">
       <BaseButton @click="close" class="ml-auto">Cancel</BaseButton>
@@ -24,9 +27,10 @@
 
 <script>
 import TheSearchPredictionsList from "./TheSearchPredictionsList.vue";
-import TheSearchPredictionCategories from './TheSearchPredictionCategories.vue'
+import TheSearchPredictionCategories from "./TheSearchPredictionCategories.vue";
 import BaseModal from "./BaseModal.vue";
 import BaseButton from "./BaseButton.vue";
+import BaseTextarea from "./BaseTextarea.vue";
 
 export default {
   emits: ["close"],
@@ -38,11 +42,13 @@ export default {
     TheSearchPredictionCategories,
     BaseModal,
     BaseButton,
+    BaseTextarea,
   },
   data() {
     return {
       selectedSearchPredictions: [],
       selectedSearchPredictionCategory: null,
+      searchPredictionDetails: "",
       searchPredictionCategories: [
         "Hateful",
         "Sexually Explicit",
